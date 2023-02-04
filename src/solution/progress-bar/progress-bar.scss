@@ -4,11 +4,15 @@
     .bar{
         height: 6px; 
         background-image: linear-gradient(to right, orange, red);
-        transition:2s ease;
+        transition:1s ease;
     }
     .fade-away {
         opacity: 0;
         transition: 1s ease,opacity 500ms 3s;  ///finish transition in 1s and fade out in 3s
     }
+}
+
+.slow-down{
+    transition:3s ease;
 }
 

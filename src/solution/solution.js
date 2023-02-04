@@ -7,15 +7,27 @@ const Solution = () => {
   const [progress, setProgress] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
   const [complete, setComplete] = React.useState(false);
-  const MAX_PROGRESS = 20;
+  const breakpoints = [30, 60];
+  const maxProgress = 20;
   let startInterval = React.useRef();
 
+  ///with more time - i will probably move the intervals and parts of this function into the progress bar component
   const startRequest = React.useCallback(() => {
     setLoading(true);
     setProgress(0);
+    const timer = 1000 ;
+
     startInterval.current = setInterval(() => {
-      setProgress((oldProgress) => oldProgress + 1);
-    }, 1000);
+      ///put a wait here based on breakpoint to slowdown animation
+
+      setProgress((oldProgress) => {
+        let newProgress = oldProgress;
+        if (!breakpoints.includes((newProgress+1)*5)) {
+          newProgress += 1;
+        }
+        return newProgress;
+      });
+    }, timer);
 
     ///end progress after 15 secs
     setTimeout(() => {
@@ -25,7 +37,7 @@ const Solution = () => {
 
   const endRequest = React.useCallback(() => {
     // 20 is the max as i am using 100%; 15 === 90%
-    setProgress(MAX_PROGRESS);
+    setProgress(maxProgress);
     setComplete(true);
     clearInterval(startInterval.current);
 
@@ -42,7 +54,14 @@ const Solution = () => {
 
   return (
     <div className="solution">
-      {loading && <ProgressBar value={progress} complete={complete} />}
+      {loading && (
+        <ProgressBar
+          value={progress}
+          complete={complete}
+          breakpoints={breakpoints}
+          max={maxProgress}
+        />
+      )}
       <RequestButton type="start" onClick={startRequest} loading={loading} />
       {loading && <RequestButton type="finish" onClick={endRequest} />}
     </div>

@@ -12,6 +12,8 @@ const RequestButton = ({ onClick, loading, type }) => {
     : type === "start"
     ? "start request"
     : "finish request";
+
+  ///improvement - prevent the buttons from moving when the progress bar is removed  
   return (
     <button disabled={loading} onClick={onClick} className={buttonClass}>
       {buttonText}
