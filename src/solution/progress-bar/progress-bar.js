@@ -1,7 +1,7 @@
 import "./progress-bar.scss";
 import React from "react";
 
-const ProgressBar = ({ value,breakpoints,max }) => {
+const ProgressBar = ({ value,max }) => {
   const percentage = value/max * 100;
 
   const style ={
